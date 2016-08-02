@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FormTools</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <style type="text/css">
+        .preview{
+            text-align: center;
+            margin-top: 30px;
+        }
+        .select{
+            margin-top: 50%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="example"></div>
+<script src="./build/react.js"></script>
+<script src="./build/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+<script type="text/babel">
+    var FormTools = React.createClass({
+        getInitialState: function () {
+            return {checked:false,name:''};
+        },
+        changeHandel: function (event) {
+            this.setState({checked: event.target.state,name:event.target.value});
+        },
+
+        render:function () {
+            return (
+                    <div>
+                        <div className="preview">
+                            <div className="btn-group btn-group-lg " role="group" >
+                                <button type="button" className="btn btn-info">预览</button>
+                            </div>
+                        </div>
+                        <Panel />
+                    </div>
+            );
+        }
+    });
+    var Panel = React.createClass({
+        render:function () {
+            return(
+                    <div className="row">
+                        <div className="col-md-7" >
+                        </div>
+                        <div className="col-md-4">
+                            <h2>文本框</h2>
+                            <div className="input-group">
+                                <span className="input-group-addon">
+                                <input type="checkbox" value="text" onClik={this.changeHandel}/>
+                                </span>
+                                <textarea type="text" className="form-control"/>
+                            </div>
+                            <h2>时间选择器</h2>
+                            <div className="col-md-1">
+                                <input  type="checkbox" value="date" onClik={this.changeHandel}/>
+                            </div>
+                            <div className="col-md-11">
+                                <div className="btn-group btn-group-lg">
+                                    <button type="button" className="btn btn-info">DATE</button>
+                                    <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span className="caret"></span>
+                                        <span className="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul className="dropdown-menu">
+          .                              <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="select">
+                                <div className="btn-group btn-group-lg " role="group" >
+                                    <button type="button" className="btn btn-info">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            )
+        }
+    });
+    ReactDOM.render(<FormTools/>,document.getElementById('example'));
+</script>
+</body>
+</html>
