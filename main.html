@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    <style type="text/css">
+        .preview{
+            text-align: center;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="container"></div>
+
+<script type="text/babel">
+    class FromTools extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                forms:[],
+                flag:true
+            }
+        }
+        addText(){
+            this.setState(function () {
+                let forms=this.state.forms;
+                forms.push(0);
+                let index=this.state.index++;
+                return {forms,index};
+            })
+        }
+        addDate(){
+            this.setState(function () {
+                let forms=this.state.forms;
+                forms.push(1);
+                let index=this.state.index++;
+                return {forms,index};
+            })
+        }
+        deleteForm(index){
+            this.setState(function () {
+                let forms=this.state.forms.splice(index,1);
+                return forms;
+            })
+        }
+        render(){
+            if(this.state.flag) {
+                return (
+                        <div>
+                            <div className="preview">
+                                <div className="btn-group btn-group-lg " role="group">
+                                    <button type="button" className="btn btn-info">预览</button>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-7">
+                                    {this.state.forms.map((form,index)=>{
+                                        if(form === 0){
+                                            return(
+                                                    <div>
+                                                        <input type="text"/>
+                                                        <button onClick={()=>this.deleteForm(index)}>delete</button>
+                                                    </div>
+                                            )
+                                        }else{
+                                            return(
+                                                    <div>
+                                                        <input type="date"/>
+                                                        <button onClick={()=>this.deleteForm(index)}>delete</button>
+                                                    </div>
+                                            )
+                                        }
+                                    })}
+
+                                </div>
+                                <div className="col-md-4">
+                                    <button onClick={()=>this.addText()}>文本框</button>
+                                    <br/>
+                                    <button onClick={()=>this.addDate()}>日期选择框</button>
+                                </div>
+                            </div>
+                        </div>
+                );
+            }else{
+                return(
+                        <button>编辑</button>
+                )
+            }
+        }
+    }
+    ReactDOM.render(<div>
+        <FromTools/>
+    </div>, document.getElementById('app'));
+</script>
+</body>
+</html>
