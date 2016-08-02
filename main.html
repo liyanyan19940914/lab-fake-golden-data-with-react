@@ -8,88 +8,181 @@
     <script src="build/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
     <style type="text/css">
-        .preview{
+        .preview {
             text-align: center;
             margin-top: 30px;
         }
 
+        .select {
+            margin-top: 70px;
+        }
+        .container{
+            width: 500px;
+        }
+        textarea{
+            width:500px;
+            height: 80px;
+        }
+        input{
+            width:500px;
+            height: 40px;
+        }
+        .border{
+            border: 2px solid #66ccff;
+        }
+        .read{
+            width:600px;
+            margin: auto;
+        }
+        .distance{
+            margin-top: 100px;
+        }
     </style>
 </head>
 <body>
-<div id="app" class="container"></div>
+<div id="app"></div>
 
 <script type="text/babel">
-    class FromTools extends React.Component{
-        constructor(props){
+    class FromTools extends React.Component {
+        constructor(props) {
             super(props);
-            this.state={
-                forms:[],
-                flag:true
+            this.state = {
+                forms: [],
+                flag: true
             }
         }
-        addText(){
+
+        addText() {
             this.setState(function () {
-                let forms=this.state.forms;
+                let forms = this.state.forms;
                 forms.push(0);
-                let index=this.state.index++;
-                return {forms,index};
+                let index = this.state.index++;
+                return {forms, index};
             })
         }
-        addDate(){
+
+        addDate() {
             this.setState(function () {
-                let forms=this.state.forms;
+                let forms = this.state.forms;
                 forms.push(1);
-                let index=this.state.index++;
-                return {forms,index};
+                let index = this.state.index++;
+                return {forms, index};
             })
         }
-        deleteForm(index){
+
+        deleteForm(index) {
             this.setState(function () {
-                let forms=this.state.forms.splice(index,1);
+                let forms = this.state.forms.splice(index, 1);
                 return forms;
             })
         }
-        render(){
-            if(this.state.flag) {
+        jumpPage() {
+            this.setState({
+                flag: !this.state.flag
+            })
+        }
+        render() {
+            if (this.state.flag) {
                 return (
                         <div>
                             <div className="preview">
                                 <div className="btn-group btn-group-lg " role="group">
-                                    <button type="button" className="btn btn-info">预览</button>
+                                    <button type="button" className="btn btn-info" onClick={()=>this.jumpPage()}>预览</button>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-md-7">
-                                    {this.state.forms.map((form,index)=>{
-                                        if(form === 0){
-                                            return(
+                                <div className="col-md-6  col-md-offset-1 border select">
+                                    {this.state.forms.map((form, index)=> {
+                                        if (form === 0) {
+                                            return (
                                                     <div>
-                                                        <input type="text"/>
-                                                        <button onClick={()=>this.deleteForm(index)}>delete</button>
+                                                        <br/>
+                                                        <div className=" select">
+                                                            <textarea type="text"/>
+                                                            <button onClick={()=>this.deleteForm(index)}>delete</button>
+                                                        </div>
+                                                        <br/>
+
                                                     </div>
                                             )
-                                        }else{
-                                            return(
+                                        } else {
+                                            return (
+
                                                     <div>
-                                                        <input type="date"/>
-                                                        <button onClick={()=>this.deleteForm(index)}>delete</button>
+                                                        <br/>
+                                                        <div className=" select">
+                                                            <input type="date"/>
+                                                            <button onClick={()=>this.deleteForm(index)}>delete</button>
+                                                        </div>
+                                                        <br/>
                                                     </div>
+
+
                                             )
                                         }
                                     })}
 
                                 </div>
-                                <div className="col-md-4">
-                                    <button onClick={()=>this.addText()}>文本框</button>
+                                <div className="col-md-4 select">
+                                    <div className="btn-group btn-group-lg " role="group">
+                                        <button type="button" className="btn btn-success" onClick={()=>this.addText()}>
+                                            文本框
+                                        </button>
+                                    </div>
                                     <br/>
-                                    <button onClick={()=>this.addDate()}>日期选择框</button>
+                                    <br/>
+                                    <div className="btn-group btn-group-lg " role="group">
+                                        <button type="button" className="btn btn-success" onClick={()=>this.addDate()}>
+                                            日期选择框
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                 );
-            }else{
-                return(
-                        <button>编辑</button>
+            } else {
+                return (
+                        <div className="preview">
+                            <div className="btn-group btn-group-lg " role="group">
+                                <button type="button" className="btn btn-info" onClick={()=>this.jumpPage()}>编辑</button>
+                            </div>
+                            <div className="border distance read">
+                                {this.state.forms.map((form, index)=> {
+                                    if (form === 0) {
+                                        return (
+                                                <div>
+                                                    <div className=" select container">
+                                                        <textarea type="text"/>
+
+                                                    </div>
+                                                    <br/>
+
+                                                </div>
+                                        )
+                                    } else {
+                                        return (
+                                                <div>
+                                                    <div className=" select container">
+                                                        <input type="date"/>
+
+                                                    </div>
+                                                    <br/>
+
+                                                </div>
+
+
+                                        )
+                                    }
+                                })}
+                                <div className="btn-group btn-group-lg " role="group">
+                                    <button type="button" className="btn btn-success" onClick={()=>this.jumpPage()}>提交</button>
+
+                                </div>
+                                <br/>
+                            </div>
+                            <br/>
+                        </div>
+
                 )
             }
         }
